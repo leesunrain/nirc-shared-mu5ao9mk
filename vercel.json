@@ -1,0 +1,78 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "deploy.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "test.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "vercel-status.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "app.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "style.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "icon.svg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "START_HERE.txt",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/deploy",
+      "dest": "/deploy.js"
+    },
+    {
+      "src": "/api/test",
+      "dest": "/test.js"
+    },
+    {
+      "src": "/api/vercel-status",
+      "dest": "/vercel-status.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ]
+}

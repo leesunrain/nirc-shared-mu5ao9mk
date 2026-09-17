@@ -1,0 +1,29 @@
+OneClick App Deployer v1.6.6 FIX
+
+현재 버전: v1.6.6
+
+핵심 수정
+- 자동판정(provider=detect)이 실행되기 전에 공통 token 검사에서 차단되던 버그 수정
+- GitHub/Vercel 개별 연결 확인은 기존 방식 그대로 유지
+- detect는 githubToken + vercelToken을 사용하도록 정상 통과
+- 이름 식별/안전장치/배포 로직은 v1.6.5 그대로 유지
+
+원인
+기존 코드:
+  if(!token) return "토큰이 없습니다."
+
+자동판정 요청:
+  provider: detect
+  githubToken: ...
+  vercelToken: ...
+  (공통 token 필드는 없음)
+
+따라서 detect 분기까지 도달하지 못하고 항상 종료되고 있었습니다.
+
+
+[v1.6.8 주소 잠금 강화]
+- 기존 앱 업데이트: 반드시 '기존 앱 빠른 선택'에서 대상 앱을 먼저 선택
+- 선택 즉시 GitHub 저장소명, Vercel 프로젝트명, 기본 주소를 잠금
+- 이후 ZIP 파일명이 바뀌어도 잠긴 기존 앱으로만 업데이트
+- 업데이트 모드에서 주소 잠금이 없으면 서버에서도 배포 차단
+- 새 앱은 기존 앱 잠금이 해제된 상태에서만 생성
